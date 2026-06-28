@@ -46,3 +46,15 @@ Custom Linux image built via `meta-lorawan-opcua`.
 ```bash
 source oe-init-build-env build-rpi5
 bitbake lorawan-opcua-image
+
+---
+
+## Documentation
+
+Full project documentation is available in the `docs/` directory:
+
+- 📘 Architecture: docs/01_Architecture
+- ⚙️ Yocto Build System: docs/02_Yocto
+- 🔁 OPC UA Flow: docs/03_OPCUA_Flow
+- 🖼 Assets: docs/assets/images
+
