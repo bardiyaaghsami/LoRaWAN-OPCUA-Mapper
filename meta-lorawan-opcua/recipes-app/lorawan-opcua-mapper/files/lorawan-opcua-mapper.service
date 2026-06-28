@@ -1,0 +1,11 @@
+[Unit]
+Description=LoRaWAN OPC UA Mapper
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/lorawan-opcua-mapper
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
