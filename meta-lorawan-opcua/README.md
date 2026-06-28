@@ -1,118 +1,48 @@
-# meta-lorawan-opcua
+# LoRaWAN → OPC UA Gateway (Yocto-based System)
 
 ## Overview
+This project implements a **LoRaWAN to OPC UA gateway** using a custom Yocto layer targeting Raspberry Pi 5.
 
-`meta-lorawan-opcua` is the custom Yocto layer for the **LoRaWAN OPC UA Mapper** project.
-
-The layer contains all project-specific recipes required to build, deploy and maintain the software stack running on Raspberry Pi 5.
-
----
-
-# Objectives
-
-* Provide the LoRaWAN OPC UA Mapper application
-* Integrate OPC UA (open62541)
-* Support MQTT communication
-* Support LoRaWAN payload processing
-* Provide systemd services
-* Support future protocol extensions
+It bridges:
+- LoRaWAN IoT devices
+- Industrial OPC UA systems
 
 ---
 
-# Supported Platform
+## System Architecture
 
-* Raspberry Pi 5
-* Yocto Scarthgap
-* systemd
+![Architecture](docs/assets/images/lorawan-opcua-architecture.png)
 
 ---
 
-# Directory Layout
+## High-Level Components
 
-```text
-meta-lorawan-opcua
+### 1. LoRaWAN Stack
+Handles sensor communication from distributed IoT nodes.
 
-├── conf
-├── recipes-app
-├── recipes-opcua
-├── recipes-protocols
-├── recipes-support
-└── README.md
-```
+### 2. Mapper Service
+Converts LoRaWAN payloads into OPC UA nodes/variables.
 
----
+### 3. OPC UA Server
+Based on open62541, exposes industrial data model.
 
-# Main Components
-
-## recipes-app
-
-Application recipes.
-
-Example:
-
-* lorawan-opcua-mapper
+### 4. Yocto Image
+Custom Linux image built via `meta-lorawan-opcua`.
 
 ---
 
-## recipes-opcua
+## OPC UA Data Flow
 
-OPC UA related recipes.
-
-Example:
-
-* opcua-server
-
----
-
-## recipes-protocols
-
-Protocol extensions and bbappend files.
-
-Example:
-
-* open62541
+1. Sensor sends LoRaWAN packet  
+2. Gateway receives packet  
+3. Mapper parses payload  
+4. Data mapped to OPC UA node  
+5. OPC UA client subscribes to variables  
 
 ---
 
-## recipes-support
-
-Utility recipes.
-
----
-
-# Dependencies
-
-* open62541
-* systemd
-* CMake
-* C++17
-
-Future:
-
-* MQTT
-* ChirpStack
-* LoRaWAN libraries
-
----
-
-# Build
-
-Add the layer using:
+## Yocto Build
 
 ```bash
-bitbake-layers add-layer ../meta-lorawan-opcua
-```
-
----
-
-# License
-
-MIT
-
----
-
-# Project
-
-LoRaWAN OPC UA Mapper
-
-Copyright (c) 2026
+source oe-init-build-env build-rpi5
+bitbake lorawan-opcua-image
